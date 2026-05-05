@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>🇰🇷 TOPIK初級 15日完成</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #F4A7B9;
+      --primary-dark: #E8889E;
+      --primary-deep: #C96B8A;
+      --accent: #B8D4F0;
+      --accent2: #D4B8F0;
+      --soft-pink: #FFE4EE;
+      --soft-lav: #EEE0FF;
+      --soft-blue: #E0EEFF;
+      --bg: #FFF5F8;
+      --bg-card: #FFFFFF;
+      --bg-muted: #FFF0F4;
+      --text: #3D2B35;
+      --text-muted: #A08898;
+      --text-light: #D4B8C4;
+      --border: #F5D5E2;
+      --success: #7DC98F;
+      --success-bg: #F0FFF4;
+      --success-border: #A8DFB5;
+      --error: #F4747A;
+      --error-bg: #FFF2F3;
+      --error-border: #F4A7AA;
+      --hint-bg: #FFF8E6;
+      --hint-color: #C8860A;
+      --radius: 20px;
+      --radius-sm: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Nunito', 'M PLUS Rounded 1c', 'Noto Sans KR', sans-serif;
+      background: linear-gradient(160deg, #FFE8F0 0%, #F0E8FF 50%, #E8F0FF 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+    /* dot pattern on bg only */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, #F4A7B928 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    #app { width: 100%; max-width: 100%; background: var(--bg); min-height: 100vh; position: relative; }
+
+
+
+    @media (max-width: 767px) { #app { max-width: 480px; margin: 0 auto; } }
+    @media (min-width: 768px) {
+      :root { --radius: 22px; }
+      body { align-items: flex-start; padding: 28px 20px; }
+      #app { max-width: 680px; border-radius: 32px; overflow: hidden; min-height: auto; box-shadow: 0 12px 60px rgba(244,167,185,0.25), 0 4px 20px rgba(0,0,0,0.08); }
+      .view { min-height: calc(100vh - 56px); }
+      .hdr { padding: 20px 32px 14px; }
+      .hdr-title { font-size: 19px; }
+      .day-badge { font-size: 14px; padding: 5px 16px; }
+      .content { padding: 26px 36px 40px; }
+      .hero { padding: 40px 24px 28px; }
+      .hero-emoji { font-size: 88px; }
+      .hero-title { font-size: 30px; }
+      .hero-sub { font-size: 16px; }
+      .day-grid { gap: 12px; margin: 0 36px 24px; }
+      .day-btn .dn { font-size: 17px; }
+      .home-card { margin: 0 36px 14px; padding: 18px 22px; }
+      .streak-wrap { margin: 0 36px 16px; }
+      .card { padding: 26px; margin-bottom: 18px; }
+      .g-form { font-size: 26px; }
+      .g-meaning { font-size: 17px; }
+      .ex-ko { font-size: 21px; }
+      .q-text { font-size: 22px; }
+      .answer-input { font-size: 21px; min-height: 68px; }
+      .btn { font-size: 17px; padding: 15px 22px; }
+      .word-ko { font-size: 54px; }
+      .word-jp { font-size: 21px; }
+      .wq-jp { font-size: 26px; }
+      .complete-emoji { font-size: 88px; }
+      .complete-title { font-size: 28px; }
+    }
+
+    /* VIEWS */
+    .view { display: none; flex-direction: column; min-height: 100vh; }
+    .view.active { display: flex; }
+
+    /* HEADER */
+    .hdr {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 14px 18px 10px;
+      border-bottom: 1.5px solid var(--border);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .hdr-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .hdr-title { font-size: 16px; font-weight: 800; color: var(--text); letter-spacing: -0.3px; }
+    .day-badge {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 8px rgba(244,167,185,0.4);
+    }
+    .back-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); padding: 4px 8px; font-family: inherit; border-radius: 50%; transition: background 0.2s; }
+    .back-btn:hover { background: var(--soft-pink); }
+    .prog-bar { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .prog-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), #E8A0C0, var(--accent2));
+      border-radius: 4px;
+      transition: width 0.5s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* CONTENT */
+    .content { flex: 1; padding: 18px 16px 32px; }
+
+    /* HOME HERO */
+    .hero { text-align: center; padding: 30px 16px 20px; }
+    .hero-bunny {
+      font-size: 64px;
+      display: block;
+      margin-bottom: 4px;
+      filter: drop-shadow(0 4px 12px rgba(244,167,185,0.4));
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+    .hero-title {
+      font-size: 26px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary-dark), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+      letter-spacing: -0.5px;
+    }
+    .hero-sub { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+
+    /* STREAK */
+    .streak-wrap { margin: 0 16px 14px; }
+    .streak-bar { display: flex; gap: 4px; margin-bottom: 4px; }
+    .streak-unit { flex: 1; height: 7px; border-radius: 4px; background: var(--border); transition: background 0.3s; }
+    .streak-unit.done { background: linear-gradient(90deg, var(--primary), var(--primary-dark)); }
+    .streak-unit.cur { background: var(--primary); box-shadow: 0 0 6px var(--primary); }
+    .streak-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-light); font-weight: 700; }
+
+    /* DAY GRID */
+    .day-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin: 0 16px 18px; }
+    .day-btn {
+      aspect-ratio: 1;
+      border-radius: 16px;
+      border: 2px solid var(--border);
+      background: var(--bg-card);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
+      box-shadow: 0 2px 8px rgba(244,167,185,0.08);
+    }
+    .day-btn .dn { font-size: 14px; color: var(--text); font-weight: 800; }
+    .day-btn .dc { font-size: 12px; color: var(--success); display: none; }
+    .day-btn.done { background: linear-gradient(135deg, #F0FFF4, #E8FFE8); border-color: var(--success-border); }
+    .day-btn.done .dc { display: block; }
+    .day-btn.done .dn { color: var(--success); }
+    .day-btn.today {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-color: var(--primary-dark);
+      box-shadow: 0 4px 16px rgba(244,167,185,0.45);
+    }
+    .day-btn.today .dn { color: #fff; }
+    .day-btn:active { transform: scale(0.92); }
+    .day-btn:hover:not(.today) { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(244,167,185,0.2); }
+
+    /* HOME CARDS */
+    .home-card {
+      margin: 0 16px 12px;
+      background: rgba(255,255,255,0.9);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      box-shadow: 0 2px 12px rgba(244,167,185,0.1);
+    }
+
+    /* CARDS */
+    .card {
+      background: rgba(255,255,255,0.95);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 14px;
+      border: 1.5px solid var(--border);
+      box-shadow: 0 2px 16px rgba(244,167,185,0.1);
+    }
+    .card-label { font-size: 10px; font-weight: 800; color: var(--primary-deep); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; }
+    .g-num {
+      font-size: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-bottom: 6px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+    .g-form { font-size: 22px; font-weight: 800; color: var(--primary-deep); font-family: 'Noto Sans KR',sans-serif; margin-bottom: 4px; }
+    .g-meaning { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+    .example-box {
+      background: linear-gradient(135deg, var(--soft-pink), #FFF8FB);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 12px 12px 0;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .ex-ko { font-size: 18px; font-weight: 700; font-family: 'Noto Sans KR',sans-serif; color: var(--text); margin-bottom: 3px; }
+    .ex-jp { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+    .g-exp { font-size: 13px; color: var(--text-muted); line-height: 1.8; font-weight: 600; }
+
+    /* QUESTION */
+    .q-card {
+      background: linear-gradient(135deg, #FFF0F5, #FFF8FC);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 20px rgba(244,167,185,0.15);
+    }
+    .q-num { font-size: 10px; font-weight: 800; color: var(--primary-dark); letter-spacing: 1px; margin-bottom: 6px; text-transform: uppercase; }
+    .q-text { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.5; margin-bottom: 14px; }
+    .answer-input {
+      width: 100%; min-height: 58px; padding: 13px 16px;
+      font-size: 20px; font-family: 'Noto Sans KR',sans-serif;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      resize: none; color: var(--text); line-height: 1.5;
+      transition: all 0.2s;
+      -webkit-appearance: none;
+      box-shadow: inset 0 2px 6px rgba(244,167,185,0.06);
+    }
+    .answer-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(244,167,185,0.15); }
+    .answer-input.correct { border-color: var(--success); background: var(--success-bg); }
+    .answer-input.wrong { border-color: var(--error); background: var(--error-bg); }
+
+    /* BUTTONS */
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 14px 20px; border-radius: 50px;
+      font-family: inherit; font-size: 15px; font-weight: 800;
+      cursor: pointer; border: none; transition: all 0.2s; width: 100%;
+      letter-spacing: 0.2px;
+    }
+    .btn:active { transform: scale(0.95); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(244,167,185,0.45);
+    }
+    .btn-primary:hover { box-shadow: 0 6px 20px rgba(244,167,185,0.55); transform: translateY(-1px); }
+    .btn-accent {
+      background: linear-gradient(135deg, #A8D8EA, #B8C8F4);
+      color: #2B4A6B;
+      box-shadow: 0 4px 14px rgba(168,216,234,0.4);
+    }
+    .btn-outline { background: #fff; color: var(--primary-dark); border: 2px solid var(--primary); }
+    .btn-hint { background: var(--hint-bg); color: var(--hint-color); border: 2px solid #FFD080; font-size: 13px; padding: 10px 14px; border-radius: 50px; }
+    .btn-ghost { background: var(--bg-muted); color: var(--text-muted); font-size: 13px; padding: 10px 14px; border-radius: 50px; }
+    .btn2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+
+    /* HINT */
+    .hint-area { margin-top: 10px; }
+    .hint-item {
+      background: linear-gradient(135deg, var(--hint-bg), #FFFDF0);
+      border-left: 4px solid #FFD080;
+      border-radius: 0 12px 12px 0;
+      padding: 9px 14px;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      animation: sld .25s ease;
+    }
+    @keyframes sld { from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);} }
+
+    /* FEEDBACK */
+    .feedback { border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 12px; display: none; animation: fd .3s ease; }
+    .feedback.show { display: block; }
+    @keyframes fd { from{opacity:0;transform:scale(0.98);}to{opacity:1;transform:scale(1);} }
+    .feedback.ok { background: var(--success-bg); border: 2px solid var(--success-border); }
+    .feedback.ng { background: var(--error-bg); border: 2px solid var(--error-border); }
+    .fb-label { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+    .fb-label.ok { color: #3DB05A; }
+    .fb-label.ng { color: var(--error); }
+    .fb-answer { font-size: 17px; font-weight: 700; font-family: 'Noto Sans KR',sans-serif; color: var(--text); margin: 4px 0; }
+    .fb-exp { font-size: 13px; color: var(--text-muted); line-height: 1.7; margin-top: 4px; font-weight: 600; }
+    .fb-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+
+    /* WORDS */
+    .word-card {
+      background: linear-gradient(135deg, #fff, var(--soft-pink));
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      min-height: 170px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 28px 16px;
+      cursor: pointer; margin-bottom: 14px;
+      transition: all 0.25s;
+      box-shadow: 0 4px 20px rgba(244,167,185,0.12);
+    }
+    .word-card:active { transform: scale(0.96); border-color: var(--primary); }
+    .word-card:hover { box-shadow: 0 8px 28px rgba(244,167,185,0.22); transform: translateY(-2px); }
+    .word-ko { font-size: 46px; font-weight: 700; font-family: 'Noto Sans KR',sans-serif; color: var(--primary-deep); line-height: 1.2; margin-bottom: 10px; }
+    .word-jp { font-size: 18px; color: var(--text-muted); transition: filter 0.3s; font-weight: 600; }
+    .word-jp.blur { filter: blur(8px); }
+    .word-hint-txt { font-size: 11px; color: var(--text-light); margin-top: 8px; font-weight: 700; letter-spacing: 0.5px; }
+    .word-nav-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .word-counter { font-size: 12px; color: var(--text-muted); font-weight: 800; }
+    .word-dots { display: flex; gap: 5px; }
+    .wd { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+    .wd.cur { background: var(--primary); box-shadow: 0 0 0 3px rgba(244,167,185,0.25); }
+    .wd.ok { background: var(--success); }
+
+    /* WORD QUIZ */
+    .wq-card {
+      background: linear-gradient(135deg, #F0F8FF, #F8F0FF);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 18px rgba(184,212,240,0.2);
+    }
+    .wq-jp { font-size: 24px; font-weight: 700; text-align: center; margin-bottom: 14px; color: var(--text); }
+
+    /* REVIEW */
+    .review-tag { display: inline-flex; align-items: center; gap: 3px; background: #FFF0E8; color: #C85000; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 10px; margin-left: 8px; }
+
+    /* DIARY */
+    .diary-card {
+      background: linear-gradient(135deg, #FFFCE8, #FFF8F0);
+      border: 2px solid #FFD080;
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 18px rgba(255,208,128,0.15);
+    }
+    .diary-title { font-size: 17px; font-weight: 800; color: #A07800; margin-bottom: 8px; }
+    .diary-prompt { font-size: 15px; color: var(--text); line-height: 1.7; margin-bottom: 12px; font-weight: 600; }
+    .diary-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .diary-tag {
+      font-size: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 800;
+    }
+    .diary-fb { background: rgba(255,255,255,0.9); border: 1.5px solid #FFD080; border-radius: var(--radius-sm); padding: 14px; margin-top: 12px; display: none; }
+    .diary-fb.show { display: block; animation: fd .3s ease; }
+    .diary-corrected { font-size: 18px; font-weight: 700; font-family: 'Noto Sans KR',sans-serif; color: var(--primary-deep); margin-bottom: 8px; }
+    .diary-exp { font-size: 13px; color: var(--text-muted); line-height: 1.7; font-weight: 600; }
+
+    /* COMPLETE */
+    .complete-card { text-align: center; padding: 40px 16px; }
+    .complete-emoji { font-size: 72px; display: block; margin-bottom: 14px; animation: float 2s ease-in-out infinite; }
+    .complete-title { font-size: 26px; font-weight: 800; background: linear-gradient(135deg, var(--primary-dark), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 6px; }
+    .complete-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; font-weight: 600; }
+    .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 20px; }
+    .stat-box { background: linear-gradient(135deg, var(--soft-pink), #fff); border-radius: 16px; padding: 14px 8px; text-align: center; border: 1.5px solid var(--border); }
+    .stat-n { font-size: 26px; font-weight: 800; color: var(--primary-dark); }
+    .stat-l { font-size: 10px; color: var(--text-muted); font-weight: 700; margin-top: 2px; letter-spacing: 0.5px; }
+
+    /* DRAWING CANVAS */
+    .draw-wrap { position: relative; margin-bottom: 12px; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid var(--border); background: #fff; box-shadow: inset 0 2px 8px rgba(244,167,185,0.08); }
+    .draw-wrap.pen-mode { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(244,167,185,0.15); cursor: crosshair; }
+    .draw-wrap.erase-mode { border-color: #B0B0E0; box-shadow: 0 0 0 3px rgba(176,176,224,0.2); cursor: cell; }
+    #draw-canvas, #wq-canvas, #rv-canvas { display: block; width: 100%; touch-action: none; }
+    .draw-toolbar { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
+    .draw-tool-btn {
+      display: flex; align-items: center; gap: 5px;
+      padding: 8px 16px; border-radius: 50px; border: 2px solid var(--border);
+      font-family: inherit; font-size: 13px; font-weight: 800; cursor: pointer;
+      transition: all 0.18s; background: #fff; color: var(--text-muted);
+    }
+    .draw-tool-btn.active-pen { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; border-color: var(--primary-dark); box-shadow: 0 3px 10px rgba(244,167,185,0.4); }
+    .draw-tool-btn.active-erase { background: linear-gradient(135deg, #C8C8F4, #B0B0E0); color: #fff; border-color: #9090C8; box-shadow: 0 3px 10px rgba(176,176,224,0.35); }
+    .draw-tool-btn:active { transform: scale(0.93); }
+    .draw-clear-btn {
+      margin-left: auto; padding: 8px 14px; border-radius: 50px;
+      border: 2px solid var(--border); background: var(--bg-muted);
+      font-family: inherit; font-size: 12px; font-weight: 800; cursor: pointer;
+      color: var(--text-muted); transition: all 0.18s;
+    }
+    .draw-clear-btn:hover { border-color: var(--error); color: var(--error); }
+    .draw-placeholder { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 14px; color: var(--text-light); font-weight: 700; pointer-events: none; text-align: center; line-height: 1.8; }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HOME -->
+  <div id="v-home" class="view active">
+    <div class="hero">
+      <span class="hero-bunny">🐰</span>
+      <div class="hero-title">🇰🇷 TOPIK 初級</div>
+      <div class="hero-sub">15日で文法60項目・単語1500語を完成！</div>
+    </div>
+    <div class="streak-wrap">
+      <div class="streak-bar" id="home-streak"></div>
+      <div class="streak-labels"><span>Day 1</span><span>Day 15</span></div>
+    </div>
+    <div class="day-grid" id="home-grid"></div>
+    <div class="home-card" style="display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--text);">🔄 復習キュー</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">間違えた問題を優先</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:28px;font-weight:700;color:var(--primary);" id="home-review-count">0</div>
+        <div style="font-size:11px;color:var(--text-muted);">問題</div>
+      </div>
+    </div>
+    <div class="home-card">
+      <div class="card-label">📋 1日の流れ（約30分）</div>
+      <div style="font-size:14px;color:var(--text);line-height:2.1;">
+        ① 文法説明（4項目）<br>② 記述式問題（各2問）<br>③ 単語学習（6語）<br>
+        ④ 単語テスト<br>⑤ 復習問題<br>⑥ 日記練習（1文）
+      </div>
+    </div>
+  </div>
+
+  <!-- GRAMMAR INTRO -->
+  <div id="v-gi" class="view">
+    <div class="hdr">
+      <div class="hdr-row">
+        <button class="back-btn" id="gi-back">←</button>
+        <span class="hdr-title" id="gi-title">文法 1/4</span>
+        <span class="day-badge" id="gi-badge">Day 1</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="gi-prog" style="width:0%"></div></div>
+    </div>
+    <div class="content">
+      <div class="card" id="gi-card"></div>
+      <button class="btn btn-primary" id="gi-btn">📝 問題を解く →</button>
+    </div>
+  </div>
+
+  <!-- QUESTION -->
+  <div id="v-q" class="view">
+    <div class="hdr">
+      <div class="hdr-row">
+        <button class="back-btn" id="q-back">←</button>
+        <span class="hdr-title" id="q-title">問題 1/2</span>
+        <span class="day-badge" id="q-badge">Day 1</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="q-prog" style="width:10%"></div></div>
+    </div>
+    <div class="content">
+      <div class="q-card">
+        <div class="q-num" id="q-num"></div>
+        <div class="q-text" id="q-text"></div>
+        <div class="draw-toolbar">
+          <button class="draw-tool-btn active-pen" id="q-pen-btn" onclick="setTool('q','pen')">✏️ ペン</button>
+          <button class="draw-tool-btn" id="q-erase-btn" onclick="setTool('q','erase')">🧽 消す</button>
+          <button class="draw-clear-btn" onclick="clearCanvas('q-canvas','q-placeholder')">全消し</button>
+        </div>
+        <div class="draw-wrap pen-mode" id="q-draw-wrap">
+          <canvas id="q-canvas" height="200"></canvas>
+          <div class="draw-placeholder" id="q-placeholder">ここにペンで韓国語を書いてください✏️<br><span style="font-size:11px;">Apple Pencilまたは指で書けます</span></div>
+        </div>
+        <div class="btn2">
+          <button class="btn btn-hint" onclick="qHint()">💡 ヒント</button>
+          <button class="btn btn-primary" onclick="qSubmit()">確認 →</button>
+        </div>
+        <div class="hint-area" id="q-hints"></div>
+        <div class="feedback" id="q-fb">
+          <div class="fb-label" id="q-fb-lbl"></div>
+          <div class="fb-answer" id="q-fb-ans"></div>
+          <div class="fb-exp" id="q-fb-exp"></div>
+          <div class="fb-actions">
+            <button class="btn btn-outline" onclick="qRetry()">もう一度</button>
+            <button class="btn btn-accent" onclick="qNext()">次へ →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORD STUDY -->
+  <div id="v-ws" class="view">
+    <div class="hdr">
+      <div class="hdr-row">
+        <button class="back-btn" onclick="startWordStudy()">←</button>
+        <span class="hdr-title">今日の単語</span>
+        <span class="day-badge" id="ws-badge">Day 1</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" style="width:65%"></div></div>
+    </div>
+    <div class="content">
+      <div style="font-size:17px;font-weight:700;margin-bottom:3px;">📚 単語を覚えよう</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">タップして意味を確認してください</div>
+      <div class="word-nav-row">
+        <div class="word-counter" id="ws-cnt">1 / 6</div>
+        <div class="word-dots" id="ws-dots"></div>
+      </div>
+      <div class="word-card" id="ws-card" onclick="wsToggle()">
+        <div class="word-ko" id="ws-ko"></div>
+        <div class="word-jp blur" id="ws-jp"></div>
+        <div class="word-hint-txt" id="ws-tap">タップして意味を見る</div>
+      </div>
+      <div class="btn2">
+        <button class="btn btn-ghost" id="ws-prev" onclick="wsPrev()">← 前へ</button>
+        <button class="btn btn-primary" id="ws-next" onclick="wsNext()">次へ →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORD QUIZ -->
+  <div id="v-wq" class="view">
+    <div class="hdr">
+      <div class="hdr-row">
+        <button class="back-btn" onclick="startWordStudy()">←</button>
+        <span class="hdr-title" id="wq-title">単語テスト 1/6</span>
+        <span class="day-badge" id="wq-badge">Day 1</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" style="width:78%"></div></div>
+    </div>
+    <div class="content">
+      <div class="wq-card">
+        <div class="card-label">✏️ ハングルで書いてください</div>
+        <div class="wq-jp" id="wq-jp"></div>
+        <div class="draw-toolbar">
+          <button class="draw-tool-btn active-pen" id="wq-pen-btn" onclick="setTool('wq','pen')">✏️ ペン</button>
+          <button class="draw-tool-btn" id="wq-erase-btn" onclick="setTool('wq','erase')">🧽 消す</button>
+          <button class="draw-clear-btn" onclick="clearCanvas('wq-canvas','wq-placeholder')">全消し</button>
+        </div>
+        <div class="draw-wrap pen-mode" id="wq-draw-wrap">
+          <canvas id="wq-canvas" height="200"></canvas>
+          <div class="draw-placeholder" id="wq-placeholder">ここにペンで書いてください✏️</div>
+        </div>
+        <div class="btn2">
+          <button class="btn btn-hint" onclick="wqHint()">💡 ヒント</button>
+          <button class="btn btn-primary" onclick="wqSubmit()">確認 →</button>
+        </div>
+        <div class="hint-area" id="wq-hints"></div>
+        <div class="feedback" id="wq-fb">
+          <div class="fb-label" id="wq-fb-lbl"></div>
+          <div class="fb-answer" id="wq-fb-ans"></div>
+          <button class="btn btn-accent" onclick="wqNext()" style="margin-top:10px;">次へ →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEW -->
+  <div id="v-rv" class="view">
+    <div class="hdr">
+      <div class="hdr-row">
+        <button class="back-btn" onclick="showDiary()">スキップ</button>
+        <span class="hdr-title" id="rv-title">復習 1/3</span>
+        <span class="day-badge" id="rv-badge">Day 1</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" style="width:88%"></div></div>
+    </div>
+    <div class="content">
+      <div style="display:flex;align-items:center;margin-bottom:12px;">
+        <div style="font-size:17px;font-weight:700;">🔄 復習</div>
+        <span class="review-tag">要復習</span>
+      </div>
+      <div class="q-card" style="border-color:#FF9933;">
+        <div class="q-num" id="rv-num"></div>
+        <div class="q-text" id="rv-text"></div>
+        <div class="draw-toolbar">
+          <button class="draw-tool-btn active-pen" id="rv-pen-btn" onclick="setTool('rv','pen')">✏️ ペン</button>
+          <button class="draw-tool-btn" id="rv-erase-btn" onclick="setTool('rv','erase')">🧽 消す</button>
+          <button class="draw-clear-btn" onclick="clearCanvas('rv-canvas','rv-placeholder')">全消し</button>
+        </div>
+        <div class="draw-wrap pen-mode" id="rv-draw-wrap">
+          <canvas id="rv-canvas" height="200"></canvas>
+          <div class="draw-placeholder" id="rv-placeholder">ここにペンで韓国語を書いてください✏️</div>
+        </div>
+        <div class="btn2">
+          <button class="btn btn-hint" onclick="rvHint()">💡 ヒント</button>
+          <button class="btn btn-primary" onclick="rvSubmit()">確認 →</button>
+        </div>
+        <div class="hint-area" id="rv-hints"></div>
+        <div class="feedback" id="rv-fb">
+          <div class="fb-label" id="rv-fb-lbl"></div>
+          <div class="fb-answer" id="rv-fb-ans"></div>
+          <button class="btn btn-accent" onclick="rvNext()" style="margin-top:10px;">次へ →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIARY -->
+  <div id="v-diary" class="view">
+    <div class="hdr">
+      <div class="hdr-row">
+        <button class="back-btn" onclick="skipDiary()">スキップ</button>
+        <span class="hdr-title">✍️ 日記練習</span>
+        <span class="day-badge" id="diary-badge">Day 1</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" style="width:95%"></div></div>
+    </div>
+    <div class="content">
+      <div class="diary-card">
+        <div class="diary-title">✍️ 今日の日記</div>
+        <div class="diary-prompt" id="diary-prompt"></div>
+        <div class="diary-tags" id="diary-tags"></div>
+        <textarea class="answer-input" id="diary-inp" placeholder="韓国語で1文書いてみましょう…" rows="3"
+          autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+        <div class="btn2" style="margin-top:12px;">
+          <button class="btn btn-ghost" onclick="skipDiary()">スキップ</button>
+          <button class="btn btn-primary" onclick="diarySubmit()">送信 →</button>
+        </div>
+        <div class="diary-fb" id="diary-fb">
+          <div style="font-size:13px;font-weight:700;color:#9A7700;margin-bottom:8px;">📝 フィードバック</div>
+          <div class="diary-corrected" id="diary-cor"></div>
+          <div class="diary-exp" id="diary-exp"></div>
+          <button class="btn btn-accent" onclick="completeDay()" style="margin-top:12px;" id="diary-fin"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPLETE -->
+  <div id="v-done" class="view">
+    <div class="content" style="padding-top:40px;">
+      <div class="card complete-card">
+        <span class="complete-emoji">🎉</span>
+        <div class="complete-title" id="done-title">Day 1 完了！</div>
+        <div class="complete-sub">今日もよく頑張りました！</div>
+        <div class="stats-row">
+          <div class="stat-box"><div class="stat-n" id="done-cor">0</div><div class="stat-l">正解</div></div>
+          <div class="stat-box"><div class="stat-n" id="done-acc">0%</div><div class="stat-l">正確率</div></div>
+          <div class="stat-box"><div class="stat-n" id="done-w">0</div><div class="stat-l">単語</div></div>
+        </div>
+        <div class="streak-wrap" style="margin:0 0 20px;">
+          <div class="streak-bar" id="done-streak"></div>
+          <div style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:4px;" id="done-lbl"></div>
+        </div>
+        <button class="btn btn-primary" onclick="goHome()" style="margin-bottom:10px;">🏠 ホームへ</button>
+        <button class="btn btn-outline" id="done-next" onclick="nextDay()">次のDayへ →</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// TOPIK 初級 15日カリキュラム データ
+
+const CURRICULUM = {
+  days: [
+    {
+      day: 1,
+      grammar: [
+        {
+          id: 1,
+          form: "이다/아니다",
+          meaning: "〜だ／〜ではない",
+          example: "나는 학생이다。",
+          translation: "私は学生だ。",
+          explanation: "名詞の後ろに「이다」をつけて「〜だ」を表します。否定は「아니다」。子音終わりの名詞→이다、母音終わり→다。",
+          questions: [
+            { jp: "私は学生です。", answer: "저는 학생이에요.", hint1: "「〜です」は이에요/예요を使います", hint2: "「学生」は 학생", hint3: "저는 학생..." },
+            { jp: "これは本ではありません。", answer: "이것은 책이 아니에요.", hint1: "「〜ではありません」は 아니에요 を使います", hint2: "「本」は 책、「これ」は 이것", hint3: "이것은 책이..." }
+          ]
+        },
+        {
+          id: 2,
+          form: "이/가",
+          meaning: "主格助詞（〜が）",
+          example: "이 책이 재미있어요。",
+          translation: "この本が面白いです。",
+          explanation: "主語を表す助詞です。子音終わりの名詞→이、母音終わりの名詞→가。",
+          questions: [
+            { jp: "友達が来ました。", answer: "친구가 왔어요.", hint1: "「〜が」は 가/이 を使います", hint2: "「友達」は 친구（母音終わり→가）", hint3: "친구가..." },
+            { jp: "先生が親切です。", answer: "선생님이 친절해요.", hint1: "子音終わりには「이」をつけます", hint2: "「先生」は 선생님、「親切だ」は 친절하다", hint3: "선생님이..." }
+          ]
+        },
+        {
+          id: 3,
+          form: "을/를",
+          meaning: "目的格助詞（〜を）",
+          example: "나는 밥을 먹어요。",
+          translation: "私はご飯を食べます。",
+          explanation: "目的語を表す助詞です。子音終わりの名詞→을、母音終わりの名詞→를。",
+          questions: [
+            { jp: "本を読みます。", answer: "책을 읽어요.", hint1: "「〜を」は 을/를 を使います", hint2: "「本」は 책（子音終わり→을）、「読む」は 읽다", hint3: "책을..." },
+            { jp: "コーヒーを飲みます。", answer: "커피를 마셔요.", hint1: "「コーヒー」は 커피（母音終わり→를）", hint2: "「飲む」は 마시다", hint3: "커피를..." }
+          ]
+        },
+        {
+          id: 4,
+          form: "에/에서",
+          meaning: "場所・方向（〜に、〜で）",
+          example: "나는 학교에 있어요。",
+          translation: "私は学校にいます。",
+          explanation: "에：存在・方向を表す（〜に）。에서：動作が行われる場所（〜で）。",
+          questions: [
+            { jp: "図書館で勉強します。", answer: "도서관에서 공부해요.", hint1: "動作の場所は「에서」を使います", hint2: "「図書館」は 도서관、「勉強する」は 공부하다", hint3: "도서관에서..." },
+            { jp: "家に帰ります。", answer: "집에 가요.", hint1: "方向・目的地は「에」を使います", hint2: "「家」は 집、「帰る/行く」は 가다", hint3: "집에..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 1, hangul: "학생", japanese: "学生" },
+        { id: 730, hangul: "사람", japanese: "人" },
+        { id: 439, hangul: "책", japanese: "本" },
+        { id: 1599, hangul: "학교", japanese: "学校" },
+        { id: 1499, hangul: "카페", japanese: "カフェ" },
+        { id: 1486, hangul: "친구", japanese: "友達" }
+      ]
+    },
+    {
+      day: 2,
+      grammar: [
+        {
+          id: 5,
+          form: "-아요/어요",
+          meaning: "〜です/〜ます（丁寧体）",
+          example: "밥을 먹어요。",
+          translation: "ご飯を食べます。",
+          explanation: "語幹の最後の母音がㅏ/ㅗなら아요、それ以外なら어요。하다動詞は해요になります。",
+          questions: [
+            { jp: "ご飯を食べます。", answer: "밥을 먹어요.", hint1: "먹다の語幹は먹（ㅓ母音）→어요", hint2: "먹다→먹+어요", hint3: "밥을 먹..." },
+            { jp: "家に行きます。", answer: "집에 가요.", hint1: "가다の語幹はガ（ㅏ母音）→아요 → 가요", hint2: "가다→가+아요→가요（縮約）", hint3: "집에..." }
+          ]
+        },
+        {
+          id: 6,
+          form: "-ㅂ니다/습니다",
+          meaning: "フォーマルな丁寧体",
+          example: "저는 학생입니다。",
+          translation: "私は学生です。",
+          explanation: "公式・フォーマルな場面で使います。母音語幹→ㅂ니다、子音語幹→습니다。",
+          questions: [
+            { jp: "私は会社員です。（フォーマル）", answer: "저는 회사원입니다.", hint1: "이다のフォーマル形は입니다", hint2: "「会社員」は 회사원", hint3: "저는 회사원..." },
+            { jp: "本を読みます。（フォーマル）", answer: "책을 읽습니다.", hint1: "子音語幹（읽）+습니다", hint2: "읽다→읽+습니다", hint3: "책을 읽..." }
+          ]
+        },
+        {
+          id: 7,
+          form: "-ㅂ니까/습니까",
+          meaning: "フォーマルな疑問形",
+          example: "이것은 책입니까？",
+          translation: "これは本ですか？",
+          explanation: "フォーマルな疑問文。文末を上げて発音します。母音語幹→ㅂ니까、子音語幹→습니까。",
+          questions: [
+            { jp: "今日は暇ですか？（フォーマル）", answer: "오늘은 한가합니까?", hint1: "形容詞+ㅂ니까/습니까で疑問形", hint2: "「暇だ」는 한가하다→한가합니다→한가합니까", hint3: "오늘은 한가..." },
+            { jp: "韓国語を勉強しますか？（フォーマル）", answer: "한국어를 공부합니까?", hint1: "하다動詞→합니까", hint2: "공부하다→공부합니까", hint3: "한국어를 공부..." }
+          ]
+        },
+        {
+          id: 8,
+          form: "-았/었/였어요",
+          meaning: "過去形（〜でした/〜ました）",
+          example: "나는 밥을 먹었어요。",
+          translation: "私はご飯を食べました。",
+          explanation: "語幹の最後の母音がㅏ/ㅗなら았어요、それ以外なら었어요。하다→했어요。",
+          questions: [
+            { jp: "昨日、友達に会いました。", answer: "어제 친구를 만났어요.", hint1: "만나다の過去形→만났어요", hint2: "만나다（ㅏ母音）→만났어요", hint3: "어제 친구를 만..." },
+            { jp: "映画を見ました。", answer: "영화를 봤어요.", hint1: "보다の過去形→봤어요（縮約）", hint2: "보다（ㅗ母音）→봤어요", hint3: "영화를..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 631, hangul: "밥", japanese: "ご飯" },
+        { id: 528, hangul: "먹다", japanese: "食べる" },
+        { id: 1062, hangul: "영화", japanese: "映画" },
+        { id: 500, hangul: "만나다", japanese: "会う" },
+        { id: 1010, hangul: "어제", japanese: "昨日" },
+        { id: 1074, hangul: "오늘", japanese: "今日" }
+      ]
+    },
+    {
+      day: 3,
+      grammar: [
+        {
+          id: 9,
+          form: "-ㄹ까요/을까요?",
+          meaning: "〜しましょうか／〜でしょうか",
+          example: "무엇을 먹을까요？",
+          translation: "何を食べましょうか？",
+          explanation: "提案や推量を表します。母音・ㄹ語幹→ㄹ까요、子音語幹→을까요。",
+          questions: [
+            { jp: "一緒に映画を見ましょうか？", answer: "같이 영화를 볼까요?", hint1: "보다（母音語幹）→볼까요", hint2: "같이=一緒に", hint3: "같이 영화를..." },
+            { jp: "ここで食べましょうか？", answer: "여기서 먹을까요?", hint1: "먹다（子音語幹）→먹을까요", hint2: "「ここで」는 여기서", hint3: "여기서 먹..." }
+          ]
+        },
+        {
+          id: 10,
+          form: "-고",
+          meaning: "〜して、〜しながら（並列・順序）",
+          example: "밥을 먹고 친구를 만난다。",
+          translation: "ご飯を食べて友達に会う。",
+          explanation: "動詞・形容詞の語幹に「고」をつけて、動作や状態を並列・列挙します。",
+          questions: [
+            { jp: "シャワーを浴びて、寝ます。", answer: "샤워하고 자요.", hint1: "動詞語幹+고+次の動詞", hint2: "샤워하다＋고＋자다（어요体）", hint3: "샤워하고..." },
+            { jp: "背が高くて、かっこいいです。", answer: "키가 크고 멋있어요.", hint1: "形容詞にも고を使えます", hint2: "크다（大きい/高い）＋고＋멋있다", hint3: "키가 크고..." }
+          ]
+        },
+        {
+          id: 11,
+          form: "-지만",
+          meaning: "〜だけど（逆接）",
+          example: "밥은 맛있지만 비싸다。",
+          translation: "ご飯はおいしいけど高い。",
+          explanation: "前の内容と反対・対照的な内容をつなぐ逆接の接続語尾です。語幹に直接つけます。",
+          questions: [
+            { jp: "韓国語は難しいけど面白いです。", answer: "한국어는 어렵지만 재미있어요.", hint1: "語幹＋지만", hint2: "어렵다＋지만＋재미있다（어요体）", hint3: "한국어는 어렵지만..." },
+            { jp: "値段は高いけど、おいしいです。", answer: "값은 비싸지만 맛있어요.", hint1: "비싸다＋지만", hint2: "「値段」는 값、「高い」は 비싸다", hint3: "값은 비싸지만..." }
+          ]
+        },
+        {
+          id: 12,
+          form: "-자",
+          meaning: "〜しよう（勧誘）",
+          example: "우리 같이 영화 보자。",
+          translation: "私たち一緒に映画を見よう。",
+          explanation: "友達や目下の人に提案・誘う時に使います。語幹にそのまま「자」をつけます。",
+          questions: [
+            { jp: "一緒に勉強しよう。", answer: "같이 공부하자.", hint1: "語幹＋자（반말・タメ口）", hint2: "공부하다→공부하자", hint3: "같이 공부..." },
+            { jp: "カフェに行こう。", answer: "카페에 가자.", hint1: "가다→가자", hint2: "「カフェに」は 카페에", hint3: "카페에..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 52, hangul: "같이", japanese: "一緒に" },
+        { id: 1621, hangul: "함께", japanese: "一緒に、共に" },
+        { id: 1353, hangul: "좋다", japanese: "良い、好きだ" },
+        { id: 1000, hangul: "어렵다", japanese: "難しい" },
+        { id: 1287, hangul: "재미있다", japanese: "面白い" },
+        { id: 782, hangul: "샤워하다", japanese: "シャワーする" }
+      ]
+    },
+    {
+      day: 4,
+      grammar: [
+        {
+          id: 13,
+          form: "-고 있다",
+          meaning: "〜している（進行形）",
+          example: "나는 밥을 먹고 있다。",
+          translation: "私はご飯を食べています。",
+          explanation: "動作の進行中を表します。動詞語幹＋고 있어요（丁寧体）。",
+          questions: [
+            { jp: "今、本を読んでいます。", answer: "지금 책을 읽고 있어요.", hint1: "動詞語幹＋고 있어요", hint2: "읽다＋고 있어요", hint3: "지금 책을 읽고..." },
+            { jp: "友達が待っています。", answer: "친구가 기다리고 있어요.", hint1: "기다리다＋고 있어요", hint2: "「待つ」는 기다리다", hint3: "친구가 기다리고..." }
+          ]
+        },
+        {
+          id: 14,
+          form: "-고 싶어요",
+          meaning: "〜したいです",
+          example: "나는 한국에 가고 싶어요。",
+          translation: "私は韓国に行きたいです。",
+          explanation: "自分の希望・願望を表します。動詞語幹＋고 싶어요。",
+          questions: [
+            { jp: "韓国料理が食べたいです。", answer: "한국 요리를 먹고 싶어요.", hint1: "動詞語幹＋고 싶어요", hint2: "먹다＋고 싶어요", hint3: "한국 요리를 먹고..." },
+            { jp: "韓国語が上手になりたいです。", answer: "한국어를 잘하고 싶어요.", hint1: "「上手だ」는 잘하다", hint2: "잘하다＋고 싶어요", hint3: "한국어를 잘하고..." }
+          ]
+        },
+        {
+          id: 15,
+          form: "-아/어 주세요",
+          meaning: "〜してください（お願い）",
+          example: "이 책을 읽어 주세요。",
+          translation: "この本を読んでください。",
+          explanation: "丁寧なお願いを表します。語幹の母音がㅏ/ㅗなら아 주세요、それ以外なら어 주세요。",
+          questions: [
+            { jp: "ゆっくり話してください。", answer: "천천히 말해 주세요.", hint1: "말하다＋아/어 주세요→말해 주세요", hint2: "하다→해로縮約", hint3: "천천히 말해..." },
+            { jp: "写真を撮ってください。", answer: "사진을 찍어 주세요.", hint1: "찍다（子音語幹）＋어 주세요", hint2: "「写真」は 사진、「撮る」는 찍다", hint3: "사진을 찍어..." }
+          ]
+        },
+        {
+          id: 16,
+          form: "-지 않아요",
+          meaning: "〜しません／〜ではありません",
+          example: "나는 밥을 먹지 않아요。",
+          translation: "私はご飯を食べません。",
+          explanation: "動詞・形容詞の否定形。語幹＋지 않아요。안＋動詞よりも丁寧な印象。",
+          questions: [
+            { jp: "お酒を飲みません。", answer: "술을 마시지 않아요.", hint1: "語幹＋지 않아요", hint2: "마시다＋지 않아요", hint3: "술을 마시지..." },
+            { jp: "寒くありません。", answer: "춥지 않아요.", hint1: "춥다→춥＋지 않아요（形容詞も同じ）", hint2: "ㅂ変則：춥다→춥지（変則なし）", hint3: "춥지..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 6, hangul: "가다", japanese: "行く" },
+        { id: 528, hangul: "먹다", japanese: "食べる" },
+        { id: 664, hangul: "보다", japanese: "見る" },
+        { id: 1236, hangul: "읽다", japanese: "読む" },
+        { id: 1227, hangul: "일어나다", japanese: "起きる" },
+        { id: 1249, hangul: "자다", japanese: "寝る" }
+      ]
+    },
+    {
+      day: 5,
+      grammar: [
+        {
+          id: 17,
+          form: "-아서/어서",
+          meaning: "〜なので／〜して（理由・順序）",
+          example: "배가 고파서 밥을 먹는다。",
+          translation: "お腹が空いてご飯を食べる。",
+          explanation: "理由・原因や順序をつなぐ接続語尾。語幹の母音がㅏ/ㅗなら아서、それ以外なら어서。",
+          questions: [
+            { jp: "疲れたので、休みます。", answer: "피곤해서 쉬어요.", hint1: "피곤하다＋아서/어서→피곤해서", hint2: "하다→해서", hint3: "피곤해서..." },
+            { jp: "嬉しくて、笑いました。", answer: "기뻐서 웃었어요.", hint1: "기쁘다→기뻐서（ㅡ脱落）", hint2: "기쁘다→기쁘＋어서→기뻐서", hint3: "기뻐서..." }
+          ]
+        },
+        {
+          id: 18,
+          form: "-아/어야 하다",
+          meaning: "〜しなければなりません",
+          example: "나는 숙제를 해야 해요。",
+          translation: "私は宿題をしなければなりません。",
+          explanation: "義務・必要を表します。語幹の母音によってア야/어야が変わります。하다→해야。",
+          questions: [
+            { jp: "薬を飲まなければなりません。", answer: "약을 먹어야 해요.", hint1: "먹다＋어야 해요", hint2: "먹다（ㅓ母音）→먹어야 해요", hint3: "약을 먹어야..." },
+            { jp: "早く起きなければなりません。", answer: "일찍 일어나야 해요.", hint1: "일어나다＋아야 해요", hint2: "일어나다（ㅏ母音）→일어나야 해요", hint3: "일찍 일어나야..." }
+          ]
+        },
+        {
+          id: 19,
+          form: "-아/어도 돼요",
+          meaning: "〜してもいいです",
+          example: "여기에서 사진을 찍어도 돼요。",
+          translation: "ここで写真を撮ってもいいです。",
+          explanation: "許可を表します。語幹の母音によって아도/어도が変わります。",
+          questions: [
+            { jp: "ここに座ってもいいですか？", answer: "여기에 앉아도 돼요?", hint1: "앉다（ㅏ母音）→앉아도 돼요", hint2: "「座る」は 앉다", hint3: "여기에 앉아도..." },
+            { jp: "窓を開けてもいいですか？", answer: "창문을 열어도 돼요?", hint1: "열다（ㅓ母音）→열어도 돼요", hint2: "「窓」는 창문、「開ける」は 열다", hint3: "창문을 열어도..." }
+          ]
+        },
+        {
+          id: 20,
+          form: "-면/으면",
+          meaning: "〜したら／〜なら（条件）",
+          example: "시간이 있으면 영화를 본다。",
+          translation: "時間があれば映画を見る。",
+          explanation: "条件を表します。母音・ㄹ語幹→면、子音語幹→으면。",
+          questions: [
+            { jp: "時間があれば、旅行します。", answer: "시간이 있으면 여행해요.", hint1: "있다（子音語幹）→있으면", hint2: "있으면＋여행하다（여요体）", hint3: "시간이 있으면..." },
+            { jp: "雨が降れば、家にいます。", answer: "비가 오면 집에 있어요.", hint1: "오다（母音語幹）→오면", hint2: "「雨が降る」는 비가 오다", hint3: "비가 오면..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 1579, hangul: "피곤하다", japanese: "疲れる" },
+        { id: 857, hangul: "쉬다", japanese: "休む" },
+        { id: 853, hangul: "숙제", japanese: "宿題" },
+        { id: 980, hangul: "약", japanese: "薬" },
+        { id: 1038, hangul: "여행", japanese: "旅行" },
+        { id: 703, hangul: "비", japanese: "雨" }
+      ]
+    },
+    {
+      day: 6,
+      grammar: [
+        {
+          id: 21,
+          form: "-기로 하다",
+          meaning: "〜することにする",
+          example: "내일부터 운동하기로 했다。",
+          translation: "明日から運動することにした。",
+          explanation: "決定・約束を表します。動詞語幹＋기로 하다。",
+          questions: [
+            { jp: "来週から韓国語を勉強することにしました。", answer: "다음 주부터 한국어를 공부하기로 했어요.", hint1: "動詞語幹＋기로 했어요", hint2: "공부하다＋기로 했어요", hint3: "한국어를 공부하기로..." },
+            { jp: "毎日運動することにしました。", answer: "매일 운동하기로 했어요.", hint1: "「毎日」는 매일", hint2: "운동하다＋기로 했어요", hint3: "매일 운동하기로..." }
+          ]
+        },
+        {
+          id: 22,
+          form: "-ㄴ데/은데",
+          meaning: "〜なんだけど（背景・対比）",
+          example: "예쁜데 너무 비싸요。",
+          translation: "きれいだけど、すごく高いです。",
+          explanation: "背景情報を述べたり、軽い逆接に使います。形容詞語幹（母音・ㄹ）→ㄴ데、子音→은데。動詞は-는데。",
+          questions: [
+            { jp: "韓国語は好きなんですけど、難しいです。", answer: "한국어는 좋은데 어려워요.", hint1: "形容詞語幹＋은데/ㄴ데", hint2: "좋다→좋은데", hint3: "한국어는 좋은데..." },
+            { jp: "今、忙しいんですけど…", answer: "지금 바쁜데요.", hint1: "바쁘다→바쁜데（ㅡ脱落）", hint2: "形容詞語幹＋ㄴ데", hint3: "지금 바쁜데..." }
+          ]
+        },
+        {
+          id: 23,
+          form: "-ㄴ/은 후에",
+          meaning: "〜した後に",
+          example: "밥을 먹은 후에 공부를 한다。",
+          translation: "ご飯を食べた後に勉強をします。",
+          explanation: "動作の後を表します。母音・ㄹ語幹→ㄴ 후에、子音語幹→은 후에。",
+          questions: [
+            { jp: "シャワーを浴びた後に寝ます。", answer: "샤워한 후에 자요.", hint1: "하다動詞→한 후에", hint2: "샤워하다→샤워한 후에", hint3: "샤워한 후에..." },
+            { jp: "ご飯を食べた後に散歩します。", answer: "밥을 먹은 후에 산책해요.", hint1: "먹다（子音語幹）→먹은 후에", hint2: "「散歩する」は 산책하다", hint3: "밥을 먹은 후에..." }
+          ]
+        },
+        {
+          id: 24,
+          form: "-기 전에",
+          meaning: "〜する前に",
+          example: "밥을 먹기 전에 손을 씻는다。",
+          translation: "ご飯を食べる前に手を洗う。",
+          explanation: "動作の前を表します。動詞語幹＋기 전에。形は変化しません。",
+          questions: [
+            { jp: "寝る前に歯を磨きます。", answer: "자기 전에 이를 닦아요.", hint1: "자다→자기 전에", hint2: "「歯を磨く」는 이를 닦다", hint3: "자기 전에..." },
+            { jp: "授業の前に予習します。", answer: "수업 전에 예습해요.", hint1: "名詞の場合は「전에」だけでOK", hint2: "수업=授業、예습=予習", hint3: "수업 전에..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 1127, hangul: "운동", japanese: "運動" },
+        { id: 1131, hangul: "운동하다", japanese: "運動する" },
+        { id: 523, hangul: "매일", japanese: "毎日" },
+        { id: 753, hangul: "산책", japanese: "散歩" },
+        { id: 366, hangul: "닦다", japanese: "磨く、拭く" },
+        { id: 1396, hangul: "지나다", japanese: "過ぎる、経つ" }
+      ]
+    },
+    {
+      day: 7,
+      grammar: [
+        {
+          id: 25,
+          form: "-ㄹ 때/을 때",
+          meaning: "〜する時",
+          example: "집에 갈 때 친구를 만났다。",
+          translation: "家に帰る時に友達に会った。",
+          explanation: "ある動作・状態の時を表します。母音・ㄹ語幹→ㄹ 때、子音語幹→을 때。",
+          questions: [
+            { jp: "暇な時、映画を見ます。", answer: "한가할 때 영화를 봐요.", hint1: "하다形容詞：한가하다→한가할 때", hint2: "母音語幹→ㄹ 때", hint3: "한가할 때..." },
+            { jp: "疲れた時は休みます。", answer: "피곤할 때는 쉬어요.", hint1: "피곤하다→피곤할 때", hint2: "는：トピックを強調", hint3: "피곤할 때는..." }
+          ]
+        },
+        {
+          id: 26,
+          form: "-으러 가다/오다",
+          meaning: "〜しに行く／来る",
+          example: "책을 빌리러 도서관에 간다。",
+          translation: "本を借りに図書館に行く。",
+          explanation: "目的（〜しに）を表します。母音・ㄹ語幹→러 가다、子音語幹→으러 가다。",
+          questions: [
+            { jp: "ご飯を食べに食堂に行きます。", answer: "밥을 먹으러 식당에 가요.", hint1: "먹다（子音語幹）→먹으러 가요", hint2: "「食堂」는 식당", hint3: "밥을 먹으러..." },
+            { jp: "韓国語を習いに韓国に来ました。", answer: "한국어를 배우러 한국에 왔어요.", hint1: "배우다（母音語幹）→배우러 왔어요", hint2: "「習う」는 배우다、「来た」는 왔어요", hint3: "한국어를 배우러..." }
+          ]
+        },
+        {
+          id: 27,
+          form: "-ㄹ/을 것이다",
+          meaning: "〜するつもりだ／未来形",
+          example: "나는 한국에 갈 것이다。",
+          translation: "私は韓国に行くつもりです。",
+          explanation: "未来の意志や推量を表します。会話では「ㄹ 거예요」がよく使われます。",
+          questions: [
+            { jp: "来年、韓国に行くつもりです。", answer: "내년에 한국에 갈 거예요.", hint1: "가다（母音語幹）→갈 거예요", hint2: "「来年」는 내년", hint3: "내년에 한국에 갈..." },
+            { jp: "明日は雨が降るでしょう。", answer: "내일은 비가 올 거예요.", hint1: "오다→올 거예요", hint2: "「明日」는 내일", hint3: "내일은 비가 올..." }
+          ]
+        },
+        {
+          id: 28,
+          form: "-는 것 같아",
+          meaning: "〜のようだ（推量）",
+          example: "그는 바쁜 것 같아。",
+          translation: "彼は忙しいようだ。",
+          explanation: "推量・婉曲表現。現在：動詞語幹＋는 것 같아요、形容詞語幹＋ㄴ/은 것 같아요。",
+          questions: [
+            { jp: "彼女は韓国人のようです。", answer: "그녀는 한국 사람인 것 같아요.", hint1: "名詞＋인 것 같아요", hint2: "「〜人」는 사람", hint3: "한국 사람인 것 같아요..." },
+            { jp: "今日は寒いようです。", answer: "오늘은 추운 것 같아요.", hint1: "춥다→추운 것 같아요（形容詞は은/ㄴ）", hint2: "ㅂ変則：춥다→추운", hint3: "오늘은 추운..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 296, hangul: "내년", japanese: "来年" },
+        { id: 302, hangul: "내일", japanese: "明日" },
+        { id: 643, hangul: "배우다", japanese: "習う" },
+        { id: 408, hangul: "도서관", japanese: "図書館" },
+        { id: 895, hangul: "식당", japanese: "食堂" },
+        { id: 1477, hangul: "춥다", japanese: "寒い" }
+      ]
+    },
+    {
+      day: 8,
+      grammar: [
+        {
+          id: 29,
+          form: "-ㄹ/을 수 있다/없다",
+          meaning: "〜できる／〜できない",
+          example: "나는 수영할 수 있다。",
+          translation: "私は泳ぐことができる。",
+          explanation: "能力や可能性を表します。母音・ㄹ語幹→ㄹ 수 있다、子音語幹→을 수 있다/없다。",
+          questions: [
+            { jp: "韓国語を話すことができます。", answer: "한국어를 말할 수 있어요.", hint1: "말하다（母音語幹）→말할 수 있어요", hint2: "하다→할 수 있어요", hint3: "한국어를 말할 수..." },
+            { jp: "今日は行くことができません。", answer: "오늘은 갈 수 없어요.", hint1: "가다→갈 수 없어요", hint2: "없다で否定", hint3: "오늘은 갈 수..." }
+          ]
+        },
+        {
+          id: 30,
+          form: "-보다",
+          meaning: "〜より（比較）",
+          example: "사과는 바나나보다 싸다。",
+          translation: "リンゴはバナナより安い。",
+          explanation: "比較を表す助詞。「A는/은 B보다 형용사」の形で使います。",
+          questions: [
+            { jp: "韓国語は日本語より難しいです。", answer: "한국어는 일본어보다 어려워요.", hint1: "B보다 더 形容詞で「Bよりもっと〜」", hint2: "「日本語」는 일본어", hint3: "한국어는 일본어보다..." },
+            { jp: "バスより地下鉄の方が速いです。", answer: "버스보다 지하철이 더 빨라요.", hint1: "「速い」는 빠르다→빨라요", hint2: "더=もっと、を加えると自然", hint3: "버스보다 지하철이..." }
+          ]
+        },
+        {
+          id: 31,
+          form: "-처럼",
+          meaning: "〜のように（比喩）",
+          example: "그는 선생님처럼 친절하다。",
+          translation: "彼は先生のように親切だ。",
+          explanation: "名詞の後につけて比喩を表します。「〜のように」「〜みたいに」の意味。",
+          questions: [
+            { jp: "鳥のように飛びたいです。", answer: "새처럼 날고 싶어요.", hint1: "名詞＋처럼", hint2: "「鳥」는 새、「飛ぶ」는 날다", hint3: "새처럼 날고..." },
+            { jp: "子供のように笑いました。", answer: "아이처럼 웃었어요.", hint1: "아이＋처럼", hint2: "「笑う」는 웃다", hint3: "아이처럼..." }
+          ]
+        },
+        {
+          id: 32,
+          form: "-때문에",
+          meaning: "〜のために／〜のせいで",
+          example: "비 때문에 늦었다。",
+          translation: "雨のせいで遅れた。",
+          explanation: "原因・理由を表します。名詞＋때문에、動詞は「動詞기 때문에」を使います。",
+          questions: [
+            { jp: "宿題のせいで遊べませんでした。", answer: "숙제 때문에 놀지 못했어요.", hint1: "名詞＋때문에", hint2: "「遊ぶ」は 놀다、못했어요=できなかった", hint3: "숙제 때문에..." },
+            { jp: "寒いので、コートを着ます。", answer: "추워서 코트를 입어요.", hint1: "この場合は-아서/어서の方が自然", hint2: "춥다＋어서→추워서", hint3: "추워서 코트를..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 846, hangul: "수영", japanese: "水泳" },
+        { id: 648, hangul: "버스", japanese: "バス" },
+        { id: 1408, hangul: "지하철", japanese: "地下鉄" },
+        { id: 714, hangul: "빠르다", japanese: "速い" },
+        { id: 709, hangul: "비싸다", japanese: "高い（値段）" },
+        { id: 915, hangul: "싸다", japanese: "安い" }
+      ]
+    },
+    {
+      day: 9,
+      grammar: [
+        {
+          id: 33,
+          form: "-을/를 위해",
+          meaning: "〜のために（目的）",
+          example: "가족을 위해 열심히 일한다。",
+          translation: "家族のために一生懸命働く。",
+          explanation: "目的を表します。名詞＋을/를 위해（서）。「때문에」と違い、ポジティブな目的に使います。",
+          questions: [
+            { jp: "健康のために毎日運動します。", answer: "건강을 위해 매일 운동해요.", hint1: "名詞＋을/를 위해", hint2: "「健康」は 건강", hint3: "건강을 위해..." },
+            { jp: "夢のために頑張ります。", answer: "꿈을 위해 열심히 해요.", hint1: "꿈（夢）＋을 위해", hint2: "「頑張る」は 열심히 하다", hint3: "꿈을 위해..." }
+          ]
+        },
+        {
+          id: 34,
+          form: "-지 마",
+          meaning: "〜しないで（禁止・タメ口）",
+          example: "늦지 마。",
+          translation: "遅れないで。",
+          explanation: "友達や目下への禁止表現。語幹＋지 마。丁寧な場合は「지 마세요」。",
+          questions: [
+            { jp: "走らないで。", answer: "뛰지 마.", hint1: "動詞語幹＋지 마", hint2: "「走る」는 뛰다", hint3: "뛰지..." },
+            { jp: "食べないで。", answer: "먹지 마.", hint1: "먹다→먹지 마", hint2: "タメ口の禁止表現", hint3: "먹지..." }
+          ]
+        },
+        {
+          id: 35,
+          form: "-지 마세요",
+          meaning: "〜しないでください（丁寧な禁止）",
+          example: "여기에서 담배를 피우지 마세요。",
+          translation: "ここでタバコを吸わないでください。",
+          explanation: "丁寧な禁止表現。語幹＋지 마세요。",
+          questions: [
+            { jp: "ここでは写真を撮らないでください。", answer: "여기서는 사진을 찍지 마세요.", hint1: "찍다＋지 마세요", hint2: "「写真」は 사진、「撮る」は 찍다", hint3: "사진을 찍지..." },
+            { jp: "騒がないでください。", answer: "떠들지 마세요.", hint1: "「騒ぐ」는 떠들다", hint2: "떠들다＋지 마세요", hint3: "떠들지..." }
+          ]
+        },
+        {
+          id: 36,
+          form: "-는 중이다",
+          meaning: "〜している最中",
+          example: "나는 밥을 먹는 중이다。",
+          translation: "私はご飯を食べているところだ。",
+          explanation: "動作の進行中を強調。「고 있다」より「今まさに〜している最中」のニュアンスが強い。",
+          questions: [
+            { jp: "今、会議中です。", answer: "지금 회의 중이에요.", hint1: "名詞の場合は「名詞 중이에요」", hint2: "「会議」는 회의", hint3: "지금 회의..." },
+            { jp: "今、電話中です。", answer: "지금 전화 중이에요.", hint1: "「電話」는 전화", hint2: "전화 중이에요", hint3: "지금 전화..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 64, hangul: "건강", japanese: "健康" },
+        { id: 256, hangul: "꿈", japanese: "夢" },
+        { id: 680, hangul: "부모", japanese: "父母" },
+        { id: 1660, hangul: "회의", japanese: "会議" },
+        { id: 1233, hangul: "일하다", japanese: "働く" },
+        { id: 1053, hangul: "열심히", japanese: "熱心に" }
+      ]
+    },
+    {
+      day: 10,
+      grammar: [
+        {
+          id: 37,
+          form: "-ㄴ/은 적이 있다/없다",
+          meaning: "〜したことがある／ない",
+          example: "나는 한국에 간 적이 있다。",
+          translation: "私は韓国に行ったことがある。",
+          explanation: "経験を表します。母音・ㄹ語幹→ㄴ 적이 있다、子音語幹→은 적이 있다。",
+          questions: [
+            { jp: "韓国料理を食べたことがあります。", answer: "한국 요리를 먹은 적이 있어요.", hint1: "먹다（子音語幹）→먹은 적이 있어요", hint2: "過去経験の表現", hint3: "한국 요리를 먹은 적이..." },
+            { jp: "韓国に行ったことがありません。", answer: "한국에 간 적이 없어요.", hint1: "가다（母音語幹）→간 적이 없어요", hint2: "없어요で経験なしを表現", hint3: "한국에 간 적이..." }
+          ]
+        },
+        {
+          id: 38,
+          form: "-이랑/랑",
+          meaning: "〜と（口語的）",
+          example: "나는 친구랑 놀았다。",
+          translation: "私は友達と遊んだ。",
+          explanation: "「〜と」の口語的な助詞。子音終わりの名詞→이랑、母音終わりの名詞→랑。「하고」「와/과」より親しみやすい。",
+          questions: [
+            { jp: "友達と映画を見ました。", answer: "친구랑 영화를 봤어요.", hint1: "친구（母音終わり）→랑", hint2: "「見た」는 봤어요", hint3: "친구랑 영화를..." },
+            { jp: "お母さんと買い物をしました。", answer: "엄마랑 쇼핑을 했어요.", hint1: "엄마（母音終わり）→랑", hint2: "「買い物」는 쇼핑", hint3: "엄마랑 쇼핑을..." }
+          ]
+        },
+        {
+          id: 39,
+          form: "-만",
+          meaning: "〜だけ（限定）",
+          example: "나는 공부만 한다。",
+          translation: "私は勉強だけする。",
+          explanation: "限定を表す助詞。名詞の直後につけます。他の助詞は省略することが多い。",
+          questions: [
+            { jp: "水だけ飲みました。", answer: "물만 마셨어요.", hint1: "名詞＋만", hint2: "「水」는 물", hint3: "물만..." },
+            { jp: "あなただけが好きです。", answer: "당신만 좋아해요.", hint1: "당신（あなた）＋만", hint2: "「好きだ」는 좋아하다", hint3: "당신만..." }
+          ]
+        },
+        {
+          id: 40,
+          form: "-도",
+          meaning: "〜も（添加）",
+          example: "나도 간다。",
+          translation: "私も行く。",
+          explanation: "添加・並列を表す助詞。他の助詞は省略してそのままつけます。",
+          questions: [
+            { jp: "私も韓国語が好きです。", answer: "저도 한국어를 좋아해요.", hint1: "저（私）＋도", hint2: "「好きだ」는 좋아하다", hint3: "저도 한국어를..." },
+            { jp: "これも美味しいです。", answer: "이것도 맛있어요.", hint1: "이것（これ）＋도", hint2: "「美味しい」는 맛있다", hint3: "이것도..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 327, hangul: "놀다", japanese: "遊ぶ" },
+        { id: 839, hangul: "쇼핑", japanese: "ショッピング" },
+        { id: 582, hangul: "물", japanese: "水" },
+        { id: 516, hangul: "맛있다", japanese: "おいしい" },
+        { id: 1071, hangul: "예약", japanese: "予約" },
+        { id: 507, hangul: "많이", japanese: "多く、たくさん" }
+      ]
+    },
+    {
+      day: 11,
+      grammar: [
+        {
+          id: 41,
+          form: "-겠-",
+          meaning: "意思・推量（〜します／〜でしょう）",
+          example: "내일 다시 오겠습니다。",
+          translation: "明日また来ます。",
+          explanation: "話者の意志や推量を表します。丁寧体では겠어요を使います。",
+          questions: [
+            { jp: "すぐ戻ります。（意志）", answer: "곧 돌아오겠어요.", hint1: "動詞語幹＋겠어요", hint2: "「戻る」는 돌아오다", hint3: "곧 돌아오겠..." },
+            { jp: "それは大変だったでしょう。（推量）", answer: "그것은 힘들었겠어요.", hint1: "過去推量：었겠어요", hint2: "「大変だ」는 힘들다", hint3: "그것은 힘들었겠..." }
+          ]
+        },
+        {
+          id: 42,
+          form: "-아/어 보다",
+          meaning: "〜してみる（試み）",
+          example: "이 음식을 먹어 보세요。",
+          translation: "この料理を食べてみてください。",
+          explanation: "試みを表します。語幹の母音によって아/어が変わります。",
+          questions: [
+            { jp: "韓国料理を食べてみました。", answer: "한국 요리를 먹어 봤어요.", hint1: "먹다＋어 봤어요（過去形）", hint2: "먹어 보다の過去→봤어요", hint3: "한국 요리를 먹어..." },
+            { jp: "この服を着てみてください。", answer: "이 옷을 입어 보세요.", hint1: "입다＋어 보세요", hint2: "「服」는 옷、「着る」는 입다", hint3: "이 옷을 입어..." }
+          ]
+        },
+        {
+          id: 43,
+          form: "-네요",
+          meaning: "〜ですね（感嘆・発見）",
+          example: "경치가 아름답네요。",
+          translation: "景色がきれいですね。",
+          explanation: "何かに気づいた時や感嘆を表します。語幹に直接ネヨをつけます。",
+          questions: [
+            { jp: "韓国語が上手ですね。", answer: "한국어를 잘하네요.", hint1: "잘하다＋네요", hint2: "「上手だ」는 잘하다", hint3: "한국어를 잘하네요..." },
+            { jp: "今日は寒いですね。", answer: "오늘은 춥네요.", hint1: "춥다→춥＋네요", hint2: "形容詞もそのまま네요", hint3: "오늘은 춥네요..." }
+          ]
+        },
+        {
+          id: 44,
+          form: "-지요/죠?",
+          meaning: "〜でしょう？（確認・同意）",
+          example: "오늘은 날씨가 좋지요？",
+          translation: "今日は天気がいいですよね？",
+          explanation: "相手に確認や同意を求める表現。지요の縮約形が죠。",
+          questions: [
+            { jp: "韓国語は面白いですよね？", answer: "한국어는 재미있지요?", hint1: "語幹＋지요?（確認）", hint2: "재미있다＋지요", hint3: "한국어는 재미있지요..." },
+            { jp: "明日は日曜日ですよね？", answer: "내일은 일요일이지요?", hint1: "名詞＋이지요（子音終わり）", hint2: "「日曜日」は 일요일", hint3: "내일은 일요일이지요..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 94, hangul: "경치", japanese: "景色" },
+        { id: 940, hangul: "아름답다", japanese: "美しい" },
+        { id: 1099, hangul: "옷", japanese: "服" },
+        { id: 120, hangul: "곧", japanese: "すぐ" },
+        { id: 278, hangul: "날씨", japanese: "天気" },
+        { id: 629, hangul: "밝다", japanese: "明るい" }
+      ]
+    },
+    {
+      day: 12,
+      grammar: [
+        {
+          id: 45,
+          form: "-이/가 되다",
+          meaning: "〜になる",
+          example: "의사가 되었어요。",
+          translation: "医者になりました。",
+          explanation: "変化・変容を表します。名詞＋이/가 되다。母音終わりの名詞→가 되다、子音終わり→이 되다。",
+          questions: [
+            { jp: "先生になりたいです。", answer: "선생님이 되고 싶어요.", hint1: "선생님（子音終わり）＋이 되다＋고 싶어요", hint2: "「先生」は 선생님", hint3: "선생님이 되고..." },
+            { jp: "有名になりました。", answer: "유명해졌어요.", hint1: "形容詞の変化：유명하다→유명해지다", hint2: "〜になる（変化）：어/아지다も使える", hint3: "유명해졌어요..." }
+          ]
+        },
+        {
+          id: 46,
+          form: "-다가",
+          meaning: "〜していて（途中で別の動作）",
+          example: "책을 읽다가 잠이 들었어요。",
+          translation: "本を読んでいて寝てしまいました。",
+          explanation: "動作の途中で別のことが起きる。語幹に直接다가をつけます。",
+          questions: [
+            { jp: "歩いていて넘어졌어요。", answer: "걷다가 넘어졌어요.", hint1: "걷다（歩く）＋다가", hint2: "ㄷ変則：걷다→걷다가", hint3: "걷다가..." },
+            { jp: "音楽を聴いていて寝てしまいました。", answer: "음악을 듣다가 잠이 들었어요.", hint1: "듣다＋다가", hint2: "「寝てしまう」는 잠이 들다", hint3: "음악을 듣다가..." }
+          ]
+        },
+        {
+          id: 47,
+          form: "-군요",
+          meaning: "〜ですね（感嘆・気づき）",
+          example: "정말 재미있군요！",
+          translation: "本当に面白いですね！",
+          explanation: "새로운 사실を知った時の感嘆。네요より少し改まった印象。",
+          questions: [
+            { jp: "そうなんですね！", answer: "그렇군요!", hint1: "그렇다＋군요", hint2: "確認・気づきの表現", hint3: "그렇군요..." },
+            { jp: "韓国語がお上手なんですね。", answer: "한국어를 잘하시는군요.", hint1: "잘하시다（尊敬）＋는군요", hint2: "动词には는군요", hint3: "한국어를 잘하시는군요..." }
+          ]
+        },
+        {
+          id: 48,
+          form: "-거나",
+          meaning: "〜したり〜したり（選択）",
+          example: "내일은 비가 오거나 눈이 내리겠습니다。",
+          translation: "明日は雨が降ったり雪が降ったりします。",
+          explanation: "複数の選択肢を並べます。語幹に거나をつけます。",
+          questions: [
+            { jp: "映画を見たり本を読んだりします。", answer: "영화를 보거나 책을 읽어요.", hint1: "보다＋거나＋읽다（어요体）", hint2: "前の動詞は거나、後は普通に活用", hint3: "영화를 보거나..." },
+            { jp: "歌ったり踊ったりします。", answer: "노래를 하거나 춤을 춰요.", hint1: "하다＋거나", hint2: "「踊る」는 춤을 추다", hint3: "노래를 하거나..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 1170, hangul: "의사", japanese: "医者" },
+        { id: 1166, hangul: "음악", japanese: "音楽" },
+        { id: 451, hangul: "듣다", japanese: "聞く" },
+        { id: 71, hangul: "걷다", japanese: "歩く" },
+        { id: 311, hangul: "넘어지다", japanese: "転ぶ" },
+        { id: 320, hangul: "노래", japanese: "歌" }
+      ]
+    },
+    {
+      day: 13,
+      grammar: [
+        {
+          id: 49,
+          form: "(이)나",
+          meaning: "〜でも／〜とか（選択・例示）",
+          example: "커피나 차 마실래요？",
+          translation: "コーヒーでもお茶でも飲みますか？",
+          explanation: "選択肢を提示したり、「〜でも（いいです）」と軽く提案します。子音終わり→이나、母音終わり→나。",
+          questions: [
+            { jp: "コーヒーでも飲みませんか？", answer: "커피나 마실까요?", hint1: "名詞＋나 마실까요", hint2: "커피（母音終わり）＋나", hint3: "커피나..." },
+            { jp: "映画でも見ましょうか？", answer: "영화나 볼까요?", hint1: "영화（母音終わり）＋나", hint2: "볼까요=見ましょうか", hint3: "영화나 볼까요..." }
+          ]
+        },
+        {
+          id: 50,
+          form: "-지 그래요?",
+          meaning: "〜したらどう？（提案）",
+          example: "좀 쉬지 그래요？",
+          translation: "少し休んだらどうですか？",
+          explanation: "相手に提案する表現。語幹＋지 그래요。やや直接的なアドバイスのニュアンス。",
+          questions: [
+            { jp: "先生に聞いたらどうですか？", answer: "선생님한테 물어보지 그래요?", hint1: "物事を勧める表現：지 그래요", hint2: "「聞く」는 물어보다", hint3: "선생님한테 물어보지..." },
+            { jp: "少し休んだらどうですか？", answer: "좀 쉬지 그래요?", hint1: "쉬다＋지 그래요", hint2: "좀=少し", hint3: "좀 쉬지..." }
+          ]
+        },
+        {
+          id: 51,
+          form: "-ㄴ/은 다음에",
+          meaning: "〜したあとで（後に）",
+          example: "점심을 먹은 다음에 산책했어요。",
+          translation: "昼ご飯を食べたあとで散歩しました。",
+          explanation: "「후에」と同じ意味。動作の後を表します。語幹によってㄴ/은が変わります。",
+          questions: [
+            { jp: "宿題をした後でゲームをします。", answer: "숙제를 한 다음에 게임을 해요.", hint1: "하다（母音語幹）→한 다음에", hint2: "「ゲーム」는 게임", hint3: "숙제를 한 다음에..." },
+            { jp: "映画を見た後でご飯を食べました。", answer: "영화를 본 다음에 밥을 먹었어요.", hint1: "보다→본 다음에", hint2: "보다（母音語幹）→ㄴ 다음에", hint3: "영화를 본 다음에..." }
+          ]
+        },
+        {
+          id: 52,
+          form: "-도록 하다",
+          meaning: "〜するようにする（指示）",
+          example: "일찍 자도록 하세요。",
+          translation: "早く寝るようにしてください。",
+          explanation: "指示や自己への指示を表します。語幹＋도록 하다。「〜するようにする」というニュアンス。",
+          questions: [
+            { jp: "遅刻しないようにしてください。", answer: "지각하지 않도록 하세요.", hint1: "지각하다＋지 않도록 하세요", hint2: "否定の场合：지 않도록", hint3: "지각하지 않도록..." },
+            { jp: "毎日練習するようにします。", answer: "매일 연습하도록 할게요.", hint1: "연습하다＋도록 할게요", hint2: "할게요=するつもりです（約束）", hint3: "매일 연습하도록..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 78, hangul: "게임", japanese: "ゲーム" },
+        { id: 1044, hangul: "연습", japanese: "練習" },
+        { id: 1393, hangul: "지각", japanese: "遅刻" },
+        { id: 1347, hangul: "좁다", japanese: "狭い" },
+        { id: 309, hangul: "넓다", japanese: "広い" },
+        { id: 1323, hangul: "정도", japanese: "程度" }
+      ]
+    },
+    {
+      day: 14,
+      grammar: [
+        {
+          id: 53,
+          form: "-지 못하다",
+          meaning: "〜できない（불가능）",
+          example: "전화를 받지 못했어요。",
+          translation: "電話に出られませんでした。",
+          explanation: "「できない」の表現。外部の事情で不可能な場合によく使います。語幹＋지 못하다。",
+          questions: [
+            { jp: "昨日は眠れませんでした。", answer: "어제는 잠을 자지 못했어요.", hint1: "자다＋지 못했어요", hint2: "「眠れない」は 자지 못하다", hint3: "어제는 잠을 자지..." },
+            { jp: "忙しくて会えませんでした。", answer: "바빠서 만나지 못했어요.", hint1: "만나다＋지 못했어요", hint2: "前に理由：바빠서", hint3: "바빠서 만나지..." }
+          ]
+        },
+        {
+          id: 54,
+          form: "-ㄴ/은 채(로)",
+          meaning: "〜したまま（状態維持）",
+          example: "신발을 신은 채로 들어왔어요。",
+          translation: "靴を履いたまま入ってきました。",
+          explanation: "ある状態のまま別の動作をする表現。語幹によってㄴ/은채(로)が変わります。",
+          questions: [
+            { jp: "眼鏡をかけたまま寝ました。", answer: "안경을 쓴 채로 잤어요.", hint1: "쓰다（母音語幹）→쓴 채로", hint2: "「眼鏡」は 안경、「かける」는 쓰다", hint3: "안경을 쓴 채로..." },
+            { jp: "服を着たまま寝てしまいました。", answer: "옷을 입은 채로 잠이 들었어요.", hint1: "입다（子音語幹）→입은 채로", hint2: "「寝てしまう」は 잠이 들다", hint3: "옷을 입은 채로..." }
+          ]
+        },
+        {
+          id: 55,
+          form: "-기 쉽다/어렵다",
+          meaning: "〜しやすい／しにくい",
+          example: "이 문제는 풀기 쉬워요。",
+          translation: "この問題は解きやすいです。",
+          explanation: "動詞語幹＋기 쉽다（しやすい）/어렵다（しにくい）。",
+          questions: [
+            { jp: "この言葉は発音しにくいです。", answer: "이 말은 발음하기 어려워요.", hint1: "발음하다＋기 어렵다→어려워요", hint2: "「発音する」는 발음하다", hint3: "이 말은 발음하기..." },
+            { jp: "この料理は作りやすいです。", answer: "이 요리는 만들기 쉬워요.", hint1: "만들다＋기 쉽다→쉬워요", hint2: "「作る」는 만들다", hint3: "이 요리는 만들기..." }
+          ]
+        },
+        {
+          id: 56,
+          form: "-아/어 본 적이 있다",
+          meaning: "〜したことがある（経験）",
+          example: "한국에 가 본 적이 있어요。",
+          translation: "韓国に行ったことがあります。",
+          explanation: "「〜してみた経験がある」。보다（試みる）＋적이 있다の組み合わせ。",
+          questions: [
+            { jp: "キムチを食べてみたことがあります。", answer: "김치를 먹어 본 적이 있어요.", hint1: "먹다＋어 본 적이 있어요", hint2: "먹어 보다＋ㄴ 적이 있다", hint3: "김치를 먹어 본 적이..." },
+            { jp: "한복を着てみたことがありますか？", answer: "한복을 입어 본 적이 있어요?", hint1: "입다＋어 본 적이 있어요（疑問）", hint2: "「한복」は 한복（韓服）", hint3: "한복을 입어 본 적이..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 241, hangul: "김치", japanese: "キムチ" },
+        { id: 1615, hangul: "한복", japanese: "韓服" },
+        { id: 964, hangul: "안경", japanese: "眼鏡" },
+        { id: 626, hangul: "발음", japanese: "発音" },
+        { id: 579, hangul: "문제", japanese: "問題" },
+        { id: 502, hangul: "만들다", japanese: "作る" }
+      ]
+    },
+    {
+      day: 15,
+      grammar: [
+        {
+          id: 57,
+          form: "-자마자",
+          meaning: "〜するやいなや（すぐに）",
+          example: "집에 도착하자마자 잤어요。",
+          translation: "家に着くやいなや寝ました。",
+          explanation: "動作の直後に別のことが起きる。語幹に자마자をつけます。",
+          questions: [
+            { jp: "起きるやいなや携帯電話を見ました。", answer: "일어나자마자 핸드폰을 봤어요.", hint1: "일어나다＋자마자", hint2: "「携帯電話」는 핸드폰", hint3: "일어나자마자..." },
+            { jp: "家に帰るやいなや手を洗います。", answer: "집에 돌아오자마자 손을 씻어요.", hint1: "돌아오다＋자마자", hint2: "「手を洗う」는 손을 씻다", hint3: "집에 돌아오자마자..." }
+          ]
+        },
+        {
+          id: 58,
+          form: "-은/는 편이다",
+          meaning: "〜するほうだ（傾向）",
+          example: "자주 가는 편이에요。",
+          translation: "よく行くほうです。",
+          explanation: "傾向や習慣を婉曲に表します。動詞：語幹＋는 편이다、形容詞：語幹＋은/ㄴ 편이다。",
+          questions: [
+            { jp: "私は早く起きる方です。", answer: "저는 일찍 일어나는 편이에요.", hint1: "일어나다（動詞）→는 편이에요", hint2: "「早く」는 일찍", hint3: "저는 일찍 일어나는 편이..." },
+            { jp: "この部屋は広い方です。", answer: "이 방은 넓은 편이에요.", hint1: "넓다（形容詞・子音語幹）→넓은 편이에요", hint2: "「部屋」는 방", hint3: "이 방은 넓은 편이..." }
+          ]
+        },
+        {
+          id: 59,
+          form: "-는 게 좋겠다",
+          meaning: "〜する方がいい（アドバイス）",
+          example: "일찍 자는 게 좋겠어요。",
+          translation: "早く寝た方がいいです。",
+          explanation: "アドバイスや提案を表します。동사語幹＋는 게 좋겠어요。",
+          questions: [
+            { jp: "早く病院に行った方がいいです。", answer: "빨리 병원에 가는 게 좋겠어요.", hint1: "가다＋는 게 좋겠어요", hint2: "「病院」는 병원", hint3: "빨리 병원에 가는 게..." },
+            { jp: "もう少し練習した方がいいですよ。", answer: "좀 더 연습하는 게 좋겠어요.", hint1: "연습하다＋는 게 좋겠어요", hint2: "좀 더=もう少し", hint3: "좀 더 연습하는 게..." }
+          ]
+        },
+        {
+          id: 60,
+          form: "-는지 알다/모르다",
+          meaning: "〜か知っている／知らない",
+          example: "어디에 가는지 알아요？",
+          translation: "どこへ行くか知っていますか？",
+          explanation: "間接疑問文を作ります。動詞語幹＋는지、形容詞語幹＋은/ㄴ지、名詞＋인지。",
+          questions: [
+            { jp: "何時に来るか知っていますか？", answer: "몇 시에 오는지 알아요?", hint1: "오다＋는지 알아요（疑問）", hint2: "「何時」는 몇 시", hint3: "몇 시에 오는지..." },
+            { jp: "どこに住んでいるか知りません。", answer: "어디에 사는지 몰라요.", hint1: "살다＋는지 몰라요", hint2: "「住む」는 살다", hint3: "어디에 사는지..." }
+          ]
+        }
+      ],
+      words: [
+        { id: 412, hangul: "도착", japanese: "到着" },
+        { id: 662, hangul: "병원", japanese: "病院" },
+        { id: 1627, hangul: "핸드폰", japanese: "携帯電話" },
+        { id: 755, hangul: "살다", japanese: "生きる、住む" },
+        { id: 834, hangul: "손", japanese: "手" },
+        { id: 928, hangul: "씻다", japanese: "洗う" }
+      ]
+    }
+  ]
+};
+
+// 日記のお題（各日の学習文法に合わせて）
+const DIARY_PROMPTS = [
+  "「私は〇〇です」と「これは〇〇です」を使って、自己紹介を1文書いてみましょう。",
+  "昨日したことを1文書いてみましょう。（〜ました）",
+  "友達を誘う一言を書いてみましょう。（〜しよう）",
+  "今、していることを1文書いてみましょう。（〜しています）",
+  "今日しなければならないことを1文書いてみましょう。",
+  "〜した後でしたことを1文書いてみましょう。",
+  "〜しに行く、の文を1文書いてみましょう。",
+  "AはBより〜だ、という比較文を1文書いてみましょう。",
+  "〜のために頑張っていることを1文書いてみましょう。",
+  "〜したことがある、という経験を1文書いてみましょう。",
+  "〜してみたいことを1文書いてみましょう。",
+  "〜になりたいことを1文書いてみましょう。",
+  "〜した後で/前での文を1文書いてみましょう。",
+  "〜できること/できないことを1文書いてみましょう。",
+  "15日間の韓国語学習を振り返って、感想を1文書いてみましょう。"
+];
+</script>
+<script>
+// ============================================================
+//  STATE
+// ============================================================
+const S={day:1,gi:0,qi:0,wi:0,wqi:0,rvi:0,completedDays:[],mistakes:[],dayCorrect:0,dayTotal:0,wReveal:false,reviewQueue:[]};
+
+// Storage: works with both file:// and http://
+const _store={};
+function save(){
+  try{localStorage.setItem('topik3',JSON.stringify({cd:S.completedDays,m:S.mistakes.slice(-80)}));}
+  catch(e){_store.data=JSON.stringify({cd:S.completedDays,m:S.mistakes.slice(-80)});}
+}
+function load(){
+  try{
+    const raw=localStorage.getItem('topik3')||_store.data||'{}';
+    const d=JSON.parse(raw);
+    if(d.cd)S.completedDays=d.cd;
+    if(d.m)S.mistakes=d.m;
+  }catch(e){}
+}
+
+// ============================================================
+//  HELPERS
+// ============================================================
+function $(i){return document.getElementById(i);}
+function DD(){return CURRICULUM.days[S.day-1];}
+function GR(){return DD().grammar[S.gi];}
+function QU(){return GR().questions[S.qi];}
+function WW(){return DD().words[S.wi];}
+function WQW(){return DD().words[S.wqi];}
+function norm(s){return(s||'').trim().replace(/\s+/g,' ').replace(/[。？！.?!]/g,'');}
+function isOK(a,b){return norm(a)===norm(b);}
+
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  const v=$(id);if(v){v.classList.add('active');window.scrollTo(0,0);}
+  if(id==='v-q') setTimeout(()=>initCanvas('q'),50);
+  if(id==='v-wq') setTimeout(()=>initCanvas('wq'),50);
+  if(id==='v-rv') setTimeout(()=>initCanvas('rv'),50);
+}
+
+function addHint(area,txt){
+  const d=document.createElement('div');d.className='hint-item';d.textContent=txt;area.appendChild(d);
+}
+
+function focus(id){setTimeout(()=>{const e=$(id);if(e)e.focus();},350);}
+
+// ============================================================
+//  HOME
+// ============================================================
+function goHome(){renderHome();showView('v-home');}
+
+function renderHome(){
+  const grid=$('home-grid'); grid.innerHTML='';
+  const next=S.completedDays.length+1;
+  for(let d=1;d<=15;d++){
+    const btn=document.createElement('button');
+    btn.className='day-btn';
+    if(S.completedDays.includes(d))btn.classList.add('done');
+    else if(d===next)btn.classList.add('today');
+    btn.innerHTML=`<span class="dn">Day ${d}</span><span class="dc">✓</span>`;
+    btn.onclick=()=>startDay(d);
+    grid.appendChild(btn);
+  }
+  const sb=$('home-streak');sb.innerHTML='';
+  for(let d=1;d<=15;d++){const u=document.createElement('div');u.className='streak-unit';if(S.completedDays.includes(d))u.classList.add('done');else if(d===next)u.classList.add('cur');sb.appendChild(u);}
+  $('home-review-count').textContent=S.mistakes.filter(m=>m.review).length;
+}
+
+// ============================================================
+//  START DAY
+// ============================================================
+function startDay(d){
+  S.day=d;S.gi=0;S.qi=0;S.wi=0;S.wqi=0;S.rvi=0;
+  S.dayCorrect=0;S.dayTotal=0;S.wReveal=false;
+  showGI();
+}
+
+// ============================================================
+//  GRAMMAR INTRO
+// ============================================================
+function showGI(){
+  const g=GR(),d=DD(),total=d.grammar.length;
+  const pct=Math.max(2,Math.round(((S.gi*2+S.qi)/(total*2+d.words.length*2+3))*100));
+  $('gi-title').textContent=`文法 ${S.gi+1}/${total}`;
+  $('gi-badge').textContent=`Day ${S.day}`;
+  $('gi-prog').style.width=pct+'%';
+  $('gi-back').onclick=()=>showView('v-home');
+  $('gi-card').innerHTML=`
+    <div class="card-label">📖 今日の文法</div>
+    <div class="g-num">文法 ${g.id}</div>
+    <div class="g-form">${g.form}</div>
+    <div class="g-meaning">${g.meaning}</div>
+    <div class="example-box"><div class="ex-ko">${g.example}</div><div class="ex-jp">${g.translation}</div></div>
+    <div class="g-exp">${g.explanation}</div>`;
+  $('gi-btn').onclick=()=>{S.qi=0;showQ();};
+  showView('v-gi');
+}
+
+// ============================================================
+//  QUESTION
+// ============================================================
+function showQ(){
+  const g=GR(),q=QU(),d=DD(),total=d.grammar.length;
+  const pct=Math.round(((S.gi*2+S.qi+1)/(total*2+d.words.length*2+3))*100);
+  $('q-title').textContent=`問題 ${S.qi+1}/${g.questions.length}`;
+  $('q-badge').textContent=`Day ${S.day}`;
+  $('q-prog').style.width=pct+'%';
+  $('q-num').textContent=`文法 ${g.id} — ${g.form}`;
+  $('q-text').textContent='🇯🇵 '+q.jp;
+  $('q-back').onclick=showGI;
+  const inp=$('q-inp');
+  inp.value='';inp.className='answer-input';inp.readOnly=false;
+  $('q-hints').innerHTML='';
+  $('q-fb').className='feedback';
+  showView('v-q');
+  focus('q-inp');
+  inp.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();qSubmit();}};
+}
+
+function qHint(){
+  const q=QU(),area=$('q-hints'),lv=area.children.length;
+  const hints=[q.hint1,q.hint2,q.hint3,'正解：'+q.answer];
+  if(lv<hints.length)addHint(area,(lv<3?`ヒント${lv+1}：`:'')+hints[lv]);
+}
+
+function qSubmit(){
+  const q=QU();
+  const fb=$('q-fb');
+  fb.className='feedback show';
+  fb.style.background='linear-gradient(135deg,#FFF8FB,#fff)';
+  fb.style.border='2px solid var(--primary)';
+  $('q-fb-lbl').className='fb-label';
+  $('q-fb-lbl').style.color='var(--primary-dark)';
+  $('q-fb-lbl').textContent='✏️ 正解を確認してください';
+  $('q-fb-ans').textContent='正解：'+q.answer;
+  $('q-fb-exp').textContent=GR().explanation;
+  S.dayTotal++;
+  setTimeout(()=>fb.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+
+function qRetry(){showQ();}
+
+function qNext(){
+  const g=GR(),d=DD();
+  if(S.qi<g.questions.length-1){S.qi++;showQ();}
+  else if(S.gi<d.grammar.length-1){S.gi++;S.qi=0;showGI();}
+  else startWordStudy();
+}
+
+// ============================================================
+//  WORD STUDY
+// ============================================================
+function startWordStudy(){S.wi=0;S.wReveal=false;renderWS();showView('v-ws');}
+
+function renderWS(){
+  const words=DD().words,w=WW();
+  $('ws-badge').textContent=`Day ${S.day}`;
+  $('ws-cnt').textContent=`${S.wi+1} / ${words.length}`;
+  const dots=$('ws-dots');dots.innerHTML='';
+  words.forEach((_,i)=>{const d=document.createElement('div');d.className='wd '+(i<S.wi?'ok':i===S.wi?'cur':'');dots.appendChild(d);});
+  $('ws-ko').textContent=w.hangul;
+  $('ws-jp').textContent=w.japanese;
+  $('ws-jp').className='word-jp'+(S.wReveal?'':' blur');
+  $('ws-tap').textContent=S.wReveal?'':'タップして意味を見る';
+  $('ws-prev').style.visibility=S.wi===0?'hidden':'visible';
+  const nb=$('ws-next');
+  if(S.wi<words.length-1){nb.textContent='次へ →';nb.className='btn btn-primary';nb.onclick=wsNext;}
+  else{nb.textContent='✏️ 単語テストへ →';nb.className='btn btn-accent';nb.onclick=startWordQuiz;}
+}
+
+function wsToggle(){S.wReveal=!S.wReveal;renderWS();}
+function wsNext(){S.wi++;S.wReveal=false;renderWS();}
+function wsPrev(){if(S.wi>0){S.wi--;S.wReveal=false;renderWS();}}
+
+// ============================================================
+//  WORD QUIZ
+// ============================================================
+function startWordQuiz(){S.wqi=0;renderWQ();showView('v-wq');focus('wq-inp');}
+
+function renderWQ(){
+  const words=DD().words,w=WQW();
+  $('wq-title').textContent=`単語テスト ${S.wqi+1}/${words.length}`;
+  $('wq-badge').textContent=`Day ${S.day}`;
+  $('wq-jp').textContent=w.japanese;
+  const inp=$('wq-inp');inp.value='';inp.className='answer-input';inp.readOnly=false;
+  $('wq-hints').innerHTML='';$('wq-fb').className='feedback';
+  inp.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();wqSubmit();}};
+}
+
+function wqHint(){
+  const w=WQW(),area=$('wq-hints');
+  if(!area.children.length)addHint(area,`ヒント：${w.hangul[0]}…（${w.hangul.length}文字）`);
+  else addHint(area,'正解：'+w.hangul);
+}
+
+function wqSubmit(){
+  const w=WQW();
+  const fb=$('wq-fb');
+  fb.className='feedback show';
+  fb.style.background='linear-gradient(135deg,#F8FFFE,#fff)';
+  fb.style.border='2px solid var(--accent)';
+  $('wq-fb-lbl').className='fb-label';
+  $('wq-fb-lbl').style.color='#2B6CB0';
+  $('wq-fb-lbl').textContent='✏️ 正解を確認してください';
+  $('wq-fb-ans').textContent='正解：'+w.hangul+'（'+w.japanese+'）';
+  setTimeout(()=>fb.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+
+function wqNext(){
+  const words=DD().words;
+  if(S.wqi<words.length-1){S.wqi++;renderWQ();showView('v-wq');focus('wq-inp');}
+  else startReview();
+}
+
+// ============================================================
+//  REVIEW
+// ============================================================
+function startReview(){
+  S.reviewQueue=S.mistakes.filter(m=>m.review&&m.day===S.day).slice(0,5);
+  S.rvi=0;
+  if(!S.reviewQueue.length){showDiary();return;}
+  renderRV();showView('v-rv');focus('rv-inp');
+}
+
+function renderRV(){
+  const item=S.reviewQueue[S.rvi];
+  const g=CURRICULUM.days[item.day-1].grammar[item.gi];
+  const q=g.questions[item.qi];
+  $('rv-title').textContent=`復習 ${S.rvi+1}/${S.reviewQueue.length}`;
+  $('rv-badge').textContent=`Day ${S.day}`;
+  $('rv-num').textContent=`文法 ${g.id} — ${g.form}`;
+  $('rv-text').textContent='🇯🇵 '+q.jp;
+  const inp=$('rv-inp');inp.value='';inp.className='answer-input';inp.readOnly=false;
+  $('rv-hints').innerHTML='';$('rv-fb').className='feedback';
+  inp.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();rvSubmit();}};
+}
+
+function rvHint(){
+  const item=S.reviewQueue[S.rvi];
+  const q=CURRICULUM.days[item.day-1].grammar[item.gi].questions[item.qi];
+  const area=$('rv-hints'),lv=area.children.length;
+  const hints=[q.hint1,q.hint2,q.hint3,'正解：'+q.answer];
+  if(lv<hints.length)addHint(area,(lv<3?`ヒント${lv+1}：`:'')+hints[lv]);
+}
+
+function rvSubmit(){
+  const item=S.reviewQueue[S.rvi];
+  const q=CURRICULUM.days[item.day-1].grammar[item.gi].questions[item.qi];
+  const fb=$('rv-fb');
+  fb.className='feedback show';
+  fb.style.background='linear-gradient(135deg,#FFF8FB,#fff)';
+  fb.style.border='2px solid var(--primary)';
+  $('rv-fb-lbl').className='fb-label';
+  $('rv-fb-lbl').style.color='var(--primary-dark)';
+  $('rv-fb-lbl').textContent='✏️ 正解を確認してください';
+  $('rv-fb-ans').textContent='正解：'+q.answer;
+  setTimeout(()=>fb.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+
+function rvNext(){S.rvi++;if(S.rvi<S.reviewQueue.length){renderRV();showView('v-rv');focus('rv-inp');}else showDiary();}
+
+// ============================================================
+//  DIARY
+// ============================================================
+function showDiary(){
+  const d=DD();
+  $('diary-badge').textContent=`Day ${S.day}`;
+  $('diary-prompt').textContent=DIARY_PROMPTS[S.day-1];
+  const tags=$('diary-tags');tags.innerHTML='';
+  d.grammar.forEach(g=>{const t=document.createElement('span');t.className='diary-tag';t.textContent=`${g.id}. ${g.form}`;tags.appendChild(t);});
+  $('diary-inp').value='';$('diary-inp').readOnly=false;
+  $('diary-fb').className='diary-fb';
+  $('diary-fin').textContent=`Day ${S.day} 完了！ 🎉`;
+  showView('v-diary');focus('diary-inp');
+}
+
+function diarySubmit(){
+  const val=$('diary-inp').value.trim();if(!val){skipDiary();return;}
+  $('diary-inp').readOnly=true;
+  $('diary-cor').textContent=val;
+  $('diary-exp').textContent=`素晴らしい！今日の文法（${DD().grammar.map(g=>g.form).join('、')}）を使えていますか？毎日1文書き続けることが上達の近道です 📖`;
+  $('diary-fb').className='diary-fb show';
+  setTimeout(()=>$('diary-fb').scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+
+function skipDiary(){completeDay();}
+
+// ============================================================
+//  COMPLETE
+// ============================================================
+function completeDay(){
+  if(!S.completedDays.includes(S.day)){S.completedDays.push(S.day);save();}
+  const acc=Math.round((S.dayCorrect/Math.max(1,S.dayTotal))*100);
+  $('done-title').textContent=`Day ${S.day} 完了！`;
+  $('done-cor').textContent=S.dayCorrect;
+  $('done-acc').textContent=acc+'%';
+  $('done-w').textContent=DD().words.length;
+  const sb=$('done-streak');sb.innerHTML='';
+  for(let d=1;d<=15;d++){const u=document.createElement('div');u.className='streak-unit';if(S.completedDays.includes(d))u.classList.add('done');sb.appendChild(u);}
+  $('done-lbl').textContent=`${S.completedDays.length}/15日 完了`;
+  const nb=$('done-next');
+  if(S.day<15){nb.textContent=`Day ${S.day+1} を始める →`;nb.style.display='';}
+  else nb.style.display='none';
+  showView('v-done');
+}
+
+function nextDay(){startDay(S.day+1);}
+
+// ============================================================
+//  INIT
+// ============================================================
+load();
+renderHome();
+
+// ============================================================
+//  CANVAS DRAWING (ペン＆消しゴム)
+// ============================================================
+const DRAW = {};
+
+function initCanvas(id) {
+  const canvas = document.getElementById(id + '-canvas');
+  if (!canvas) return;
+  const wrap = canvas.parentElement;
+  // Set canvas pixel size to match display size
+  const rect = wrap.getBoundingClientRect();
+  const w = rect.width || wrap.offsetWidth || 340;
+  canvas.width = w * window.devicePixelRatio;
+  canvas.height = 200 * window.devicePixelRatio;
+  canvas.style.width = '100%';
+  canvas.style.height = '200px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  DRAW[id] = { ctx, isDrawing: false, tool: 'pen', hasContent: false };
+
+  // Touch events
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); drawStart(id, e.touches[0]); }, { passive: false });
+  canvas.addEventListener('touchmove', e => { e.preventDefault(); drawMove(id, e.touches[0]); }, { passive: false });
+  canvas.addEventListener('touchend', e => { e.preventDefault(); drawEnd(id); }, { passive: false });
+  // Mouse events (for testing on desktop)
+  canvas.addEventListener('mousedown', e => drawStart(id, e));
+  canvas.addEventListener('mousemove', e => drawMove(id, e));
+  canvas.addEventListener('mouseup', e => drawEnd(id));
+  canvas.addEventListener('mouseleave', e => drawEnd(id));
+}
+
+function getPos(canvas, e) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: (e.clientX - rect.left),
+    y: (e.clientY - rect.top)
+  };
+}
+
+function drawStart(id, e) {
+  const d = DRAW[id]; if (!d) return;
+  const canvas = document.getElementById(id + '-canvas');
+  const pos = getPos(canvas, e);
+  d.isDrawing = true;
+  d.ctx.beginPath();
+  d.ctx.moveTo(pos.x, pos.y);
+  if (d.tool === 'pen') {
+    d.ctx.globalCompositeOperation = 'source-over';
+    d.ctx.strokeStyle = '#3D2B35';
+    d.ctx.lineWidth = 2.5;
+  } else {
+    d.ctx.globalCompositeOperation = 'destination-out';
+    d.ctx.lineWidth = 28;
+  }
+  // Hide placeholder on first draw
+  const ph = document.getElementById(id + '-placeholder');
+  if (ph && d.tool === 'pen') { ph.style.opacity = '0'; d.hasContent = true; }
+}
+
+function drawMove(id, e) {
+  const d = DRAW[id]; if (!d || !d.isDrawing) return;
+  const canvas = document.getElementById(id + '-canvas');
+  const pos = getPos(canvas, e);
+  d.ctx.lineTo(pos.x, pos.y);
+  d.ctx.stroke();
+  d.ctx.beginPath();
+  d.ctx.moveTo(pos.x, pos.y);
+}
+
+function drawEnd(id) {
+  const d = DRAW[id]; if (!d) return;
+  d.isDrawing = false;
+  d.ctx.globalCompositeOperation = 'source-over';
+}
+
+function setTool(id, tool) {
+  const d = DRAW[id]; if (!d) return;
+  d.tool = tool;
+  // Update button styles
+  const penBtn = document.getElementById(id + '-pen-btn');
+  const eraseBtn = document.getElementById(id + '-erase-btn');
+  const wrap = document.getElementById(id + '-draw-wrap');
+  if (tool === 'pen') {
+    penBtn.className = 'draw-tool-btn active-pen';
+    eraseBtn.className = 'draw-tool-btn';
+    wrap.className = 'draw-wrap pen-mode';
+  } else {
+    penBtn.className = 'draw-tool-btn';
+    eraseBtn.className = 'draw-tool-btn active-erase';
+    wrap.className = 'draw-wrap erase-mode';
+  }
+}
+
+function clearCanvas(canvasId, placeholderId) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const id = canvasId.replace('-canvas', '');
+  const d = DRAW[id];
+  if (d) {
+    d.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    d.hasContent = false;
+  }
+  const ph = document.getElementById(placeholderId);
+  if (ph) ph.style.opacity = '1';
+  // Reset to pen mode
+  setTool(id, 'pen');
+}
+
+// Init canvases when views become active
+// Canvas init is called directly - no override needed
+
+
+</script>
+</body>
+</html>
